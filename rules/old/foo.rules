@@ -1,0 +1,6 @@
+rule "Calculate time of day"
+when
+	System started
+then
+	vTimeOfDay.sendCommand("DAY")
+end

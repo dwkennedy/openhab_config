@@ -1,0 +1,19 @@
+
+rule "enable motion sensor at 10pm"
+when
+	Time cron "0 13 15 ? * * *"
+then
+	ZWaveNode008ZW100Multisensor6_MotionAlarm.sendCommand("ON")
+	logInfo("Motion","Enabling sensor")
+	sendBroadcastNotification("It is 10pm.  enabling motion sensor")
+end
+
+rule "disable motion sensor at 10pm"
+when
+	Time cron "0 12 15 ? * * *"
+then
+	ZWaveNode008ZW100Multisensor6_MotionAlarm.sendCommand("OFF")
+	logInfo("Motion","Disabling sensor")
+	sendBroadcastNotification("It is 10pm.  disabling motion sensor")
+end
+

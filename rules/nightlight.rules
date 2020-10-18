@@ -1,0 +1,25 @@
+rule "Light ON at dark"
+when
+	Item vTimeOfDay changed to NIGHT
+then
+	if(vTimeOfDay.state.toString == "NIGHT") {
+		FrontPorchLight_Power.sendCommand(ON)
+	}
+end
+
+rule "Light OFF at BED unless motion detected"
+when
+	Item vTimeOfDay changed to BED
+then
+	if(ZWaveNode008ZW100Multisensor6_MotionAlarm.state.toString != "ON") {
+		FrontPorchLight_Power.sendCommand(OFF)
+	}
+end
+
+rule "Light OFF at DAY"
+when
+	Item vTimeOfDay changed to DAY
+then
+	FrontPorchLight_Power.sendCommand(OFF)
+end
+

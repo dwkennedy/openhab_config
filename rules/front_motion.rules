@@ -1,0 +1,17 @@
+rule "Motion detect front ON if not DAY"
+when
+	Item ZWaveNode008ZW100Multisensor6_MotionAlarm changed from OFF to ON
+then
+	if (vTimeOfDay.state.toString != "DAY") {
+		FrontPorchLight_Power.sendCommand(ON)
+	}
+end
+
+rule "Motion detect front OFF during DAY or BED"
+when
+	Item ZWaveNode008ZW100Multisensor6_MotionAlarm changed from ON to OFF 
+then
+	if (vTimeOfDay.state.toString == "BED" || vTimeOfDay.state.toString == "DAY") {
+		FrontPorchLight_Power.sendCommand(OFF)
+	}
+end
